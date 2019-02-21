@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.amandabezerra.myschedules.service.RequestQueueSingleton;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView = findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        AppSingleton.getInstance(this).addToRequestQueue(jsonArrayRequest);
+        RequestQueueSingleton.getInstance(this).addToRequestQueue(jsonArrayRequest);
     }
 
     public void createTask(View view) {
