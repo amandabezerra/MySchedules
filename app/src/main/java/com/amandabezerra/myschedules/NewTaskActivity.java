@@ -1,11 +1,9 @@
 package com.amandabezerra.myschedules;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -15,18 +13,22 @@ import com.amandabezerra.myschedules.utils.TaskManager;
 
 public class NewTaskActivity extends AppCompatActivity {
 
+    private EditText editTextTitle;
+    private EditText editTextDescription;
+    private CheckBox checkBoxYes;
+    private CheckBox checkBoxYNo;
+    private EditText editTextDeadlineDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task);
 
-        final Context context = this;
-
-        final EditText editTextTitle = findViewById(R.id.editTextTitle);
-        final EditText editTextDescription = findViewById(R.id.editTextDescription);
-        final CheckBox checkBoxYes = findViewById(R.id.checkBoxYes);
-        final CheckBox checkBoxYNo = findViewById(R.id.checkBoxNo);
-        final EditText editTextDeadlineDate = findViewById(R.id.editTextDeadlineDate);
+        editTextTitle = findViewById(R.id.edit_text_title);
+        editTextDescription = findViewById(R.id.edit_text_description);
+        checkBoxYes = findViewById(R.id.check_box_yes);
+        checkBoxYNo = findViewById(R.id.check_box_no);
+        editTextDeadlineDate = findViewById(R.id.edit_text_deadline_date);
 
         checkBoxYes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -48,24 +50,18 @@ public class NewTaskActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-        final Button btn = findViewById(R.id.buttonCreate);
+    public void createTask(View view) {
+        String title = editTextTitle.getText().toString();
+        String description = editTextDescription.getText().toString();
+        String completed = checkBoxYes.isChecked() ? "true" : "false";
+        String deadline = editTextDeadlineDate.getText().toString();
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Task task = new Task(title, description, completed, deadline);
+        TaskManager manager = new TaskManager();
+        manager.create(this, task);
 
-                String title = editTextTitle.getText().toString();
-                String description = editTextDescription.getText().toString();
-                String completed = checkBoxYes.isChecked() ? "true" : "false";
-                String deadline = editTextDeadlineDate.getText().toString();
-
-                Task task = new Task(title, description, completed, deadline);
-                TaskManager manager = new TaskManager();
-                manager.create(context, task);
-
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }
-        });
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

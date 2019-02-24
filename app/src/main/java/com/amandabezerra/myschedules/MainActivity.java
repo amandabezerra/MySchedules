@@ -16,26 +16,27 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Pair<String, String>> schedulesList = new ArrayList<>();
+    private List<Pair<String, String>> taskList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.view_task_list);
         recyclerView.setHasFixedSize(true);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        LineAdapter mAdapter = new LineAdapter(this.schedulesList);
-        recyclerView.setAdapter(mAdapter);
+
+        LineAdapter adapter = new LineAdapter(this.taskList);
+        recyclerView.setAdapter(adapter);
 
         TaskManager manager = new TaskManager();
-        manager.list(this, schedulesList, mAdapter);
+        manager.list(this, taskList, adapter);
     }
 
     public void createTask(View view) {
-        Intent intent = new Intent(this, NewTaskActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, NewTaskActivity.class));
     }
 }

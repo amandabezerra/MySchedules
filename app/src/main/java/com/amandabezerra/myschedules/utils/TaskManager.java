@@ -2,6 +2,7 @@ package com.amandabezerra.myschedules.utils;
 
 import android.content.Context;
 import android.support.v4.util.Pair;
+import android.util.Log;
 
 import com.amandabezerra.myschedules.entity.Task;
 import com.android.volley.Request;
@@ -21,13 +22,14 @@ import java.util.Map;
 
 public class TaskManager {
 
-    private final static String userid = "ce73f375568d4277b44f579e6ac1bc";
+    private static final String USER_ID = "ce73f375568d4277b44f579e6ac1bc";
+    private static final String TAG = "TaskManager";
 
     public void list(Context context, final List<Pair<String, String>> list, final LineAdapter adapter) {
-        String urlListTasks = "http://prova.scytlbrasil.com:81/Api/tasks?userid=" + userid;
+        String urlListTasks = "http://prova.scytlbrasil.com:81/Api/tasks?userid=" + USER_ID;
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
-                (Request.Method.GET, urlListTasks, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest (Request.Method.GET, urlListTasks, null,
+                new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
@@ -38,7 +40,7 @@ public class TaskManager {
                                 list.add(Pair.create(obj.optString("Title"), obj.optString("Id")));
                                 adapter.notifyDataSetChanged();
                             } catch (JSONException e) {
-                                // to do
+                                Log.e(TAG, e.getMessage());
                             }
                         }
                     }
@@ -46,7 +48,11 @@ public class TaskManager {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // to do
+                        if (error != null && error.getMessage() != null) {
+                            Log.e(TAG, error.getMessage());
+                        } else {
+                            Log.e(TAG, "Invalid request");
+                        }
                     }
                 });
 
@@ -54,32 +60,33 @@ public class TaskManager {
     }
 
     public void create(Context context, final Task task) {
-        String urlCreateTask = "http://prova.scytlbrasil.com:81/Api/tasks/PostTask/authentication?userid=" + userid;
+        String urlCreateTask = "http://prova.scytlbrasil.com:81/Api/tasks/PostTask/authentication?userid=" + USER_ID;
+
         StringRequest postRequest = new StringRequest(Request.Method.POST, urlCreateTask,
-                new Response.Listener<String>()
-                {
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // to do
+
                     }
-                },
-                new Response.ErrorListener()
-                {
+                }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // to do
+                        if (error != null && error.getMessage() != null) {
+                            Log.e(TAG, error.getMessage());
+                        } else {
+                            Log.e(TAG, "Invalid request");
+                        }
                     }
                 }
         ) {
             @Override
-            protected Map<String, String> getParams()
-            {
+            protected Map<String, String> getParams() {
                 Map<String, String>  params = new HashMap<>();
                 params.put("title", task.getTitle());
                 params.put("description", task.getDescription());
                 params.put("completed", task.getCompleted());
                 params.put("deadline", task.getDeadline());
-                params.put("userid", userid);
+                params.put("userid", USER_ID);
 
                 return params;
             }
@@ -89,20 +96,22 @@ public class TaskManager {
     }
 
     public void update(Context context, final Task task, String taskId) {
-        String urlUpdateTask = "http://prova.scytlbrasil.com:81/Api/tasks/EditTask?id=" + taskId + "&userid=" + userid;
+        String urlUpdateTask = "http://prova.scytlbrasil.com:81/Api/tasks/EditTask?id=" + taskId + "&userid=" + USER_ID;
+
         StringRequest postRequest = new StringRequest(Request.Method.POST, urlUpdateTask,
-                new Response.Listener<String>()
-                {
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // to do
+
                     }
-                },
-                new Response.ErrorListener()
-                {
+                }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // to do
+                        if (error != null && error.getMessage() != null) {
+                            Log.e(TAG, error.getMessage());
+                        } else {
+                            Log.e(TAG, "Invalid request");
+                        }
                     }
                 }
         ) {
@@ -114,7 +123,7 @@ public class TaskManager {
                 params.put("description", task.getDescription());
                 params.put("completed", task.getCompleted());
                 params.put("deadline", task.getDeadline());
-                params.put("userid", userid);
+                params.put("userid", USER_ID);
 
                 return params;
             }
@@ -124,10 +133,10 @@ public class TaskManager {
     }
 
     public void detail(Context context, String taskId, final ServerCallback callback) {
-        String urlDetailTask = "http://prova.scytlbrasil.com:81/Api/tasks?id=" + taskId + "&userid=" + userid;
-//        String urlDetailTask = "http://prova.scytlbrasil.com/Api/tasks/GetTask?id=" + taskId + "&userid=" + userid;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, urlDetailTask, null, new Response.Listener<JSONObject>() {
+        String urlDetailTask = "http://prova.scytlbrasil.com:81/Api/tasks/GetTask?id=" + taskId + "&userid=" + USER_ID;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest (Request.Method.GET, urlDetailTask, null,
+                new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
@@ -143,7 +152,11 @@ public class TaskManager {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // to do
+                        if (error != null && error.getMessage() != null) {
+                            Log.e(TAG, error.getMessage());
+                        } else {
+                            Log.e(TAG, "Invalid request");
+                        }
                     }
                 });
 
@@ -151,10 +164,10 @@ public class TaskManager {
     }
 
     public void delete(Context context, String taskId) {
-        String urlDeleteTask = "http://prova.scytlbrasil.com:81/Api/tasks/RemoveTask?id=" + taskId + "&userid=" + userid;
+        String urlDeleteTask = "http://prova.scytlbrasil.com:81/Api/tasks/RemoveTask?id=" + taskId + "&userid=" + USER_ID;
+
         StringRequest postRequest = new StringRequest(Request.Method.POST, urlDeleteTask,
-                new Response.Listener<String>()
-                {
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // to do
@@ -162,7 +175,11 @@ public class TaskManager {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // to do
+                        if (error != null && error.getMessage() != null) {
+                            Log.e(TAG, error.getMessage());
+                        } else {
+                            Log.e(TAG, "Invalid request");
+                        }
                     }
                 });
 

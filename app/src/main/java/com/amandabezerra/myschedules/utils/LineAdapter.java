@@ -14,10 +14,10 @@ import java.util.List;
 
 public class LineAdapter extends RecyclerView.Adapter<LineHolder> {
 
-    private final List<Pair<String, String>> mDataset;
+    private final List<Pair<String, String>> dataSet;
 
-    public LineAdapter(List<Pair<String, String>> mDataset) {
-        this.mDataset = mDataset;
+    public LineAdapter(List<Pair<String, String>> dataSet) {
+        this.dataSet = dataSet;
     }
 
     @Override
@@ -28,15 +28,15 @@ public class LineAdapter extends RecyclerView.Adapter<LineHolder> {
 
     @Override
     public void onBindViewHolder(final LineHolder holder, int position) {
-        holder.title.setText(mDataset.get(position).first);
-        holder.itemView.setTag(mDataset.get(position).second);
+        holder.title.setText(dataSet.get(position).first);
+        holder.itemView.setTag(dataSet.get(position).second);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), EditTaskActivity.class);
                 String taskId = holder.itemView.getTag().toString();
-                intent.putExtra("taskId", taskId);
+                intent.putExtra("TASK_ID", taskId);
 
                 holder.itemView.getContext().startActivity(intent);
             }
@@ -45,7 +45,7 @@ public class LineAdapter extends RecyclerView.Adapter<LineHolder> {
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return dataSet.size();
     }
 
 }

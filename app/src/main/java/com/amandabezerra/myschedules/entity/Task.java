@@ -6,7 +6,6 @@ public class Task {
     private String description;
     private String completed;
     private String deadline;
-    private final static String userid = "@string/userid";
 
     public Task(String title, String description,
                 String completed, String deadline) {
@@ -40,10 +39,6 @@ public class Task {
 
     public void setDeadline(String deadline) {
         this.deadline = deadline;
-    }
-
-    public static String getUserid() {
-        return userid;
     }
 
     public String getCompleted() {

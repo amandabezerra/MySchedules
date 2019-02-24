@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/new_button"
+        android:id="@+id/button_new_task"
         android:layout_width="204dp"
         android:layout_height="43dp"
         android:layout_marginBottom="24dp"
@@ -19,10 +19,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_recycler_view" />
+        app:layout_constraintTop_toBottomOf="@+id/view_task_list" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/my_recycler_view"
+        android:id="@+id/view_task_list"
         android:layout_width="0dp"
         android:layout_height="412dp"
         android:layout_marginStart="16dp"
@@ -31,11 +31,12 @@
         android:layout_marginBottom="24dp"
         android:orientation="vertical"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/new_button"
+        app:layout_constraintBottom_toTopOf="@+id/button_new_task"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
         tools:listitem="@layout/main_line_view" />
 
 </android.support.constraint.ConstraintLayout>

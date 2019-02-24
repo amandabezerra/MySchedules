@@ -12,6 +12,6 @@ public class LineHolder extends RecyclerView.ViewHolder {
 
     public LineHolder(View itemView) {
         super(itemView);
-        title = itemView.findViewById(R.id.main_line_title);
+        title = itemView.findViewById(R.id.view_task_title);
     }
 }

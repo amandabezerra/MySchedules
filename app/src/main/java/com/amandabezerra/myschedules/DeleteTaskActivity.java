@@ -17,9 +17,12 @@ public class DeleteTaskActivity extends AppCompatActivity {
 
     public void confirm(View view) {
         TaskManager manager = new TaskManager();
-        manager.delete(this, getIntent().getExtras().getString("taskId"));
 
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        if (getIntent().getExtras() != null) {
+            manager.delete(this, getIntent().getExtras().getString("TASK_ID"));
+        }
+
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     public void cancel(View view) {
