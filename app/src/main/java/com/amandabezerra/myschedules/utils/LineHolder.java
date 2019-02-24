@@ -1,8 +1,10 @@
-package com.amandabezerra.myschedules;
+package com.amandabezerra.myschedules.utils;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import com.amandabezerra.myschedules.R;
 
 public class LineHolder extends RecyclerView.ViewHolder {
 
@@ -10,6 +12,6 @@ public class LineHolder extends RecyclerView.ViewHolder {
 
     public LineHolder(View itemView) {
         super(itemView);
-        title = (TextView) itemView.findViewById(R.id.main_line_title);
+        title = itemView.findViewById(R.id.main_line_title);
     }
 }

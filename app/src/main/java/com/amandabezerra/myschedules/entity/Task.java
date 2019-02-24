@@ -1,7 +1,5 @@
 package com.amandabezerra.myschedules.entity;
 
-import java.util.Date;
-
 public class Task {
 
     private String title;

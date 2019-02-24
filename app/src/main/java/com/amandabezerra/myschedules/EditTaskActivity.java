@@ -11,14 +11,15 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.amandabezerra.myschedules.entity.Task;
+import com.amandabezerra.myschedules.utils.ServerCallback;
 import com.amandabezerra.myschedules.utils.TaskManager;
 
-public class NewTaskActivity extends AppCompatActivity {
+public class EditTaskActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_task);
+        setContentView(R.layout.activity_edit_task);
 
         final Context context = this;
 
@@ -49,7 +50,22 @@ public class NewTaskActivity extends AppCompatActivity {
             }
         });
 
-        final Button btn = findViewById(R.id.buttonCreate);
+        final Button btn = findViewById(R.id.buttonUpdate);
+
+        final String taskId = getIntent().getExtras().getString("taskId");
+        TaskManager manager = new TaskManager();
+        manager.detail(this, taskId, new ServerCallback() {
+            @Override
+                public void onSuccess(Task result) {
+                    editTextTitle.setText(result.getTitle());
+                    System.out.println(result.getTitle());
+                    editTextDescription.setText(result.getDescription());
+                    if (result.getCompleted().equals("true")) checkBoxYes.setChecked(true);
+                    if (result.getCompleted().equals("false")) checkBoxYNo.setChecked(true);
+                    editTextDeadlineDate.setText(result.getDeadline().replace("T00:00:00", ""));
+                }
+            }
+        );
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +78,8 @@ public class NewTaskActivity extends AppCompatActivity {
 
                 Task task = new Task(title, description, completed, deadline);
                 TaskManager manager = new TaskManager();
-                manager.create(context, task);
+
+                manager.update(context, task, taskId);
 
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }

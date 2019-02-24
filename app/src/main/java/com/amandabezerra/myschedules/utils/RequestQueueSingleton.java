@@ -1,4 +1,4 @@
-package com.amandabezerra.myschedules.service;
+package com.amandabezerra.myschedules.utils;
 
 import android.content.Context;
 
