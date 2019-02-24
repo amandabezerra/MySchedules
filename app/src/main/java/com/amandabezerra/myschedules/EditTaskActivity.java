@@ -85,4 +85,10 @@ public class EditTaskActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void deleteTask(View view) {
+        Intent intent = new Intent(this, DeleteTaskActivity.class);
+        intent.putExtra("taskId", getIntent().getExtras().getString("taskId"));
+        startActivity(intent);
+    }
 }

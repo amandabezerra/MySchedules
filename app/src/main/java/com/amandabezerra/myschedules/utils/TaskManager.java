@@ -125,7 +125,7 @@ public class TaskManager {
 
     public void detail(Context context, String taskId, final ServerCallback callback) {
         String urlDetailTask = "http://prova.scytlbrasil.com:81/Api/tasks?id=" + taskId + "&userid=" + userid;
-
+//        String urlDetailTask = "http://prova.scytlbrasil.com/Api/tasks/GetTask?id=" + taskId + "&userid=" + userid;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, urlDetailTask, null, new Response.Listener<JSONObject>() {
 
@@ -148,5 +148,24 @@ public class TaskManager {
                 });
 
         RequestQueueSingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
+    public void delete(Context context, String taskId) {
+        String urlDeleteTask = "http://prova.scytlbrasil.com:81/Api/tasks/RemoveTask?id=" + taskId + "&userid=" + userid;
+        StringRequest postRequest = new StringRequest(Request.Method.POST, urlDeleteTask,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // to do
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // to do
+                    }
+                });
+
+        RequestQueueSingleton.getInstance(context).addToRequestQueue(postRequest);
     }
 }

@@ -38,10 +38,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NewTaskActivity.class);
         startActivity(intent);
     }
-
-    public void editTask(View view) {
-        Intent intent = new Intent(this, EditTaskActivity.class);
-        intent.putExtra("taskId", "1");
-        startActivity(intent);
-    }
 }
