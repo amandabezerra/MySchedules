@@ -19,6 +19,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private CheckBox checkBoxYes;
     private CheckBox checkBoxYNo;
     private EditText editTextDeadlineDate;
+
     private String taskId;
 
     @Override
@@ -60,10 +61,35 @@ public class EditTaskActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Task result) {
                         editTextTitle.setText(result.getTitle());
-                        editTextDescription.setText(result.getDescription());
-                        if (result.getCompleted().equals("true")) checkBoxYes.setChecked(true);
-                        if (result.getCompleted().equals("false")) checkBoxYNo.setChecked(true);
-                        editTextDeadlineDate.setText(result.getDeadline().replace("T00:00:00", ""));
+
+                        if (result.getDescription().equals("null")) {
+                            editTextDescription.setText("");
+                        } else {
+                            editTextDescription.setText(result.getDescription());
+                        }
+
+                        if (result.getCompleted().equals("true")) {
+                            checkBoxYes.setChecked(true);
+                        }
+                        if (result.getCompleted().equals("false")) {
+                            checkBoxYNo.setChecked(true);
+                        }
+
+                        String deadline = result.getDeadline();
+                        if (deadline.equals("null")) {
+                            deadline = "";
+                        } else {
+                            StringBuilder deadlineFormated = new StringBuilder();
+                            deadlineFormated.append(deadline.substring(5, 7));
+                            deadlineFormated.append("/");
+                            deadlineFormated.append(deadline.substring(8, 10));
+                            deadlineFormated.append("/");
+                            deadlineFormated.append(deadline.substring(0, 4));
+
+                            deadline = deadlineFormated.toString();
+                        }
+
+                        editTextDeadlineDate.setText(deadline);
                     }
                 }
         );
